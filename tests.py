@@ -12,7 +12,8 @@ class TestCase(unittest.TestCase):
             big_hex = hex(decimal)[2:].upper()
             if len(big_hex) % 2 == 1:
                 big_hex = '0' + big_hex
-            big_hex = ' '.join(big_hex[i:i + 2] for i in range(0, len(big_hex), 2))
+            big_hex = ' '.join(big_hex[i:i + 2]
+                               for i in range(0, len(big_hex), 2))
             self.assertEqual(conv_endian(decimal, 'big'), big_hex)
 
 
