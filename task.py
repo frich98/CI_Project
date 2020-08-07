@@ -79,7 +79,7 @@ def my_datetime(num_sec):
     diff = [x - num_days for x in cum_sum_list_days_by_year]
     min_diff = min(i for i in diff if i > 0)
     year_of_date = list_years[diff.index(min_diff)]
-    num_days_of_year = list_days_since_epoch_by_year[diff.index(min_diff)]
+    # num_days_of_year = list_days_since_epoch_by_year[diff.index(min_diff)]
 
     # finding number of days that have elapsed in prior years
     if diff.index(min_diff) > 0:
