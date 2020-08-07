@@ -1,6 +1,6 @@
 def conv_endian(num, endian='big'):
     """Accepts an int value as num, converts and returns it as a
-    hexadecimal string"""
+    hexadecimal string number"""
     positive = bool(num >= 0)
     num = abs(num)
 
@@ -18,16 +18,15 @@ def conv_endian(num, endian='big'):
     if len(hexadecimal) % 2 == 1:
         hexadecimal += '0'
 
-    # Split hex symbols into a list
+    # Flip contiguous hex symbols in blocks of 2
     hexadecimal_list = list(hexadecimal)
 
-    # Re-initialize hex string as positive or negative
-    if positive:
-        hexadecimal = ""
-    else:
+    # initialize hex string as positive or negative
+    if not positive:
         hexadecimal = "-"
+    else:
+        hexadecimal = ""
 
-    # Flip contiguous symbols in blocks of two
     if endian == 'big':
         for i in range(len(hexadecimal_list) - 1, 0, -2):
             temp = hexadecimal_list[i - 1]
@@ -103,7 +102,7 @@ def my_datetime(num_sec):
     diff = [x - num_days_in_actual_year for x in cum_sum_days_in_month]
     min_diff = min(i for i in diff if i > 0)
     month_of_date = diff.index(min_diff) + 1  # indexing starts at 0
-    num_days_of_month = days_in_month[diff.index(min_diff)]
+    # num_days_of_month = days_in_month[diff.index(min_diff)]
 
     # finding days that have elapsed since month in question
     if diff.index(min_diff) > 0:
