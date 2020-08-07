@@ -1,6 +1,6 @@
 def conv_endian(num, endian='big'):
     """Accepts an int value as num, converts and returns it as a
-    hexadecimal string number"""
+    hexadecimal string"""
     positive = bool(num >= 0)
     num = abs(num)
 
@@ -18,15 +18,16 @@ def conv_endian(num, endian='big'):
     if len(hexadecimal) % 2 == 1:
         hexadecimal += '0'
 
-    # Flip contiguous hex symbols in blocks of 2
+    # Split hex symbols into a list
     hexadecimal_list = list(hexadecimal)
 
-    # initialize hex string as positive or negative
-    if not positive:
-        hexadecimal = "-"
-    else:
+    # Re-initialize hex string as positive or negative
+    if positive:
         hexadecimal = ""
+    else:
+        hexadecimal = "-"
 
+    # Flip contiguous symbols in blocks of two
     if endian == 'big':
         for i in range(len(hexadecimal_list) - 1, 0, -2):
             temp = hexadecimal_list[i - 1]
