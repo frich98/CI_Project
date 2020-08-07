@@ -1,6 +1,8 @@
 import unittest
 import random
+import datetime
 from task import conv_endian
+from task import my_datetime
 
 
 class TestCase(unittest.TestCase):
@@ -15,6 +17,11 @@ class TestCase(unittest.TestCase):
             big_hex = ' '.join(big_hex[i:i + 2]
                                for i in range(0, len(big_hex), 2))
             self.assertEqual(conv_endian(decimal, 'big'), big_hex)
+
+    # Simple check for first merge
+    def test1_function2(self):
+        expected = "09-27-1972"
+        self.assertEqual(my_datetime(1441*1000), expected)
 
 
 if __name__ == '__main__':

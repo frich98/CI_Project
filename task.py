@@ -43,3 +43,114 @@ def conv_endian(num, endian='big'):
         return hexadecimal.strip()
     else:
         return "None"
+
+
+def my_datetime(num_sec):
+    """ This function takes an integer value that represents the number
+    of seconds since the epoch: Jan 1, 1970. Function takes num_sec,
+    converts it into a date, and returns it as a string with the following
+    format: MM-DD-YYYY. num_sec will always be an int, num_sec will always
+    be positive, and this function must be able to handle leap years."""
+
+    # Figuring out number of days elapsed
+    num_sec_per_day = 24 * 60  # 1440
+    if not num_sec % num_sec_per_day == 0:
+        num_days_int, num_days_dec = divmod(num_sec / num_sec_per_day, 1)
+        num_days = num_days_int + 1
+    else:
+        num_days = num_sec / num_sec_per_day
+
+    # List of # of days per year by year starting with 1970
+    # need to handle up to year 9999 per Piazza post
+    # cumulatively sum each consecutive year's # days in a new list
+    leap_year_status = False
+    list_years = range(1970, 9999 + 1)
+    list_days_since_epoch_by_year = []
+    for i in list_years:
+        if leap_year_tf(i):
+            list_days_since_epoch_by_year.append(366)
+            leap_year_status = True
+        else:
+            list_days_since_epoch_by_year.append(365)
+    cum_sum_list_days_by_year = \
+        cum_sum_list(list_days_since_epoch_by_year)
+
+    # finding closest year by finding min > 0
+    diff = [x - num_days for x in cum_sum_list_days_by_year]
+    min_diff = min(i for i in diff if i > 0)
+    year_of_date = list_years[diff.index(min_diff)]
+    num_days_of_year = list_days_since_epoch_by_year[diff.index(min_diff)]
+
+    # finding number of days that have elapsed in prior years
+    if diff.index(min_diff) > 0:
+        num_days_of_prior_years = \
+            cum_sum_list_days_by_year[(diff.index(min_diff) - 1)]
+    else:
+        num_days_of_prior_years = 0
+
+    # num days elapsed in current year
+    num_days_in_actual_year = num_days - num_days_of_prior_years
+
+    # days_in_month
+    if leap_year_status:
+        days_in_month = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    else:
+        days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    cum_sum_days_in_month = cum_sum_list(days_in_month)
+
+    # finding closest month by finding min > 0
+    diff = [x - num_days_in_actual_year for x in cum_sum_days_in_month]
+    min_diff = min(i for i in diff if i > 0)
+    month_of_date = diff.index(min_diff) + 1  # indexing starts at 0
+    num_days_of_month = days_in_month[diff.index(min_diff)]
+
+    # finding days that have elapsed since month in question
+    if diff.index(min_diff) > 0:
+        num_days_prior_months = \
+            cum_sum_days_in_month[(diff.index(min_diff) - 1)]
+    else:
+        num_days_prior_months = 0
+
+    # num days elapsed in current month = day of date
+    day_of_date = num_days_in_actual_year - num_days_prior_months
+
+    # formatting date
+    date_value = format_date(day_of_date, month_of_date, year_of_date)
+    return date_value
+
+
+def format_date(mth, dy, yr):
+    day_of_date = format_with_leading_zero(dy)
+    month_of_date = format_with_leading_zero(mth)
+    year_of_date = format_with_leading_zero(yr)
+    date_value = day_of_date + "-"
+    date_value = date_value + month_of_date + "-"
+    date_value = date_value + year_of_date
+    return date_value
+
+
+def format_with_leading_zero(num):
+    if num < 10:
+        return "0" + str(int(num))
+    else:
+        return str(int(num))
+
+
+def cum_sum_list(list_values):
+    """Source: https://www.geeksforgeeks.org/
+    python-program-to-find-cumulative-sum-of-a-list/"""
+    cu_list = []
+    length = len(list_values)
+    cu_list = [sum(list_values[0:x:1]) for x in range(0, length + 1)]
+    return cu_list[1:]
+
+
+def leap_year_tf(yr):
+    """Deciding if a year is a leap year or not.
+    Source:https://www.timeanddate.com/date/leapyear.html"""
+    if yr % 4 == 0 and yr % 100 == 0 and not yr % 400 == 0:
+        return False
+    elif yr % 4 == 0:
+        return True
+    else:
+        return False
