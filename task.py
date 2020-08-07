@@ -1,4 +1,4 @@
-def conv_endian(num, endian = 'big'):
+def conv_endian(num, endian='big'):
     """Accepts an int value as num, converts and returns it as a
     hexadecimal string"""
     positive = bool(num >= 0)
