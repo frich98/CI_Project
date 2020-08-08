@@ -47,7 +47,7 @@ def convert_hexadecimal(num_str):
                 index_value = ord(hex_str[i]) - 48
             hex_value += index_value * (16 ** n)
             n += 1
-    if neg_num:
+    if is_negative(num_str):
         hex_value *= -1
     return hex_value
 
@@ -72,7 +72,7 @@ def convert_float(num_str):
             return None
         float_value += ((ord(num_str[j]) - 48) * (10 ** (n)))
         n -= 1
-    if neg_num:
+    if is_negative(num_str):
         float_value *= -1
     return float_value
 
@@ -91,7 +91,7 @@ def convert_integer(num_str):
         else:
             int_value += ((ord(num_str[i]) - 48) * (10 ** n))
             n += 1
-    if neg_num:
+    if is_negative(num_str):
         int_value *= -1
     return int_value
 
