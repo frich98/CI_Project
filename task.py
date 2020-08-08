@@ -1,6 +1,6 @@
 def conv_endian(num, endian='big'):
     """Accepts an int value as num, converts and returns it as a
-    hexadecimal string number"""
+    hexadecimal string"""
     positive = bool(num >= 0)
     num = abs(num)
 
@@ -18,15 +18,16 @@ def conv_endian(num, endian='big'):
     if len(hexadecimal) % 2 == 1:
         hexadecimal += '0'
 
-    # Flip contiguous hex symbols in blocks of 2
+    # Split hex symbols into a list
     hexadecimal_list = list(hexadecimal)
 
-    # initialize hex string as positive or negative
-    if not positive:
-        hexadecimal = "-"
-    else:
+    # Re-initialize hex string as positive or negative
+    if positive:
         hexadecimal = ""
+    else:
+        hexadecimal = "-"
 
+    # Flip contiguous symbols in blocks of two
     if endian == 'big':
         for i in range(len(hexadecimal_list) - 1, 0, -2):
             temp = hexadecimal_list[i - 1]
@@ -52,24 +53,24 @@ def my_datetime(num_sec):
     format: MM-DD-YYYY. num_sec will always be an int, num_sec will always
     be positive, and this function must be able to handle leap years."""
 
-    # Figuring out number of days elapsed
-    num_sec_per_day = 24 * 60  # 1440
+    # Figuring out number of days starting with EPOCH = 1
+    num_sec_per_day = 24 * 60 * 60  # 1440 * 60 = 86,400
+    if num_sec == 0:
+        num_days = 1
     if not num_sec % num_sec_per_day == 0:
         num_days_int, num_days_dec = divmod(num_sec / num_sec_per_day, 1)
-        num_days = num_days_int + 1
+        num_days = int(num_days_int + 1)
     else:
-        num_days = num_sec / num_sec_per_day
+        num_days = int(num_sec / num_sec_per_day)
 
     # List of # of days per year by year starting with 1970
     # need to handle up to year 9999 per Piazza post
     # cumulatively sum each consecutive year's # days in a new list
-    leap_year_status = False
     list_years = range(1970, 9999 + 1)
     list_days_since_epoch_by_year = []
     for i in list_years:
         if leap_year_tf(i):
             list_days_since_epoch_by_year.append(366)
-            leap_year_status = True
         else:
             list_days_since_epoch_by_year.append(365)
     cum_sum_list_days_by_year = \
@@ -92,7 +93,7 @@ def my_datetime(num_sec):
     num_days_in_actual_year = num_days - num_days_of_prior_years
 
     # days_in_month
-    if leap_year_status:
+    if leap_year_tf(year_of_date):
         days_in_month = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     else:
         days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
@@ -114,9 +115,13 @@ def my_datetime(num_sec):
     # num days elapsed in current month = day of date
     day_of_date = num_days_in_actual_year - num_days_prior_months
 
-    # formatting date
-    date_value = format_date(day_of_date, month_of_date, year_of_date)
-    return date_value
+    # formatting date and returning
+    if num_sec == 0:
+        return format_date(1, 1, 1970)
+    elif num_sec == "":
+        return "None"
+    else:
+        return format_date(day_of_date, month_of_date, year_of_date)
 
 
 def format_date(mth, dy, yr):
