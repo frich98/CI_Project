@@ -1,5 +1,6 @@
 def conv_num(num_str):
-    """This function takes in a string and converts it into a base 10 number and returns it."""
+    """This function takes in a string and converts it into a base 10 number
+    and returns it."""
     # If num_str is not a string
     if not type(num_str) == str:
         return None
