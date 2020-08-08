@@ -1,3 +1,30 @@
+def is_negative(num_str):
+    """Returns true if number in string is negative, false otherwise"""
+    if num_str[0] == "-":
+        return True
+    else:
+        return False
+
+
+def is_hexadecimal(num_str):
+    """Returns true if number in string is hexadecimal, false otherwise"""
+    neg_num = is_negative(num_str)
+    if not neg_num:
+        if num_str[0:2].lower() == "0x":
+            return True
+    else:
+        if num_str[1:3].lower() == "0x":
+            return True
+    return False
+
+
+def is_float(num_str):
+    """Returns true if number in string is a float, false otherwise"""
+    if "." in num_str:
+        return True
+    else:
+        return False
+
 def conv_num(num_str):
     """This function takes in a string and converts it into a base 10 number
     and returns it."""
@@ -9,25 +36,10 @@ def conv_num(num_str):
     if len(num_str) <= 0:
         return None
 
-    neg_num = False
-    hex_num = False
-    float_num = False
-
-    # See if negative
-    if num_str[0] == "-":
-        neg_num = True
-
-    # See if hexadecimal
-    if not neg_num:
-        if num_str[0:2].lower() == "0x":
-            hex_num = True
-    else:
-        if num_str[1:3].lower() == "0x":
-            hex_num = True
-
-    # See if float
-    if "." in num_str:
-        float_num = True
+    # Determine number type
+    neg_num = is_negative(num_str)
+    hex_num = is_hexadecimal(num_str)
+    float_num = is_float(num_str)
 
     # Set index for positive or negative
     start_index = 0
