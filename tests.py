@@ -13,7 +13,8 @@ class Test(unittest.TestCase):
             big_hex = hex(num)[2:].upper()
             if len(big_hex) % 2 == 1:
                 big_hex = '0' + big_hex
-            big_hex = ' '.join(big_hex[i:i + 2] for i in range(0, len(big_hex), 2))
+            big_hex = ' '.join(big_hex[i:i + 2]
+                               for i in range(0, len(big_hex), 2))
             if negative:
                 big_hex = '-' + big_hex
             self.assertEqual(conv_endian(decimal, 'big'), big_hex)
@@ -27,7 +28,9 @@ class Test(unittest.TestCase):
             little_hex = hex(num)[2:].upper()
             if len(little_hex) % 2 == 1:
                 little_hex = '0' + little_hex
-            little_hex = ' '.join(little_hex[i:i + 2] for i in range(len(little_hex), -1, -2)).strip()
+            little_hex = ' '.join(
+                little_hex[i:i + 2]
+                for i in range(len(little_hex), -1, -2)).strip()
             if negative:
                 little_hex = '-' + little_hex
             self.assertEqual(conv_endian(decimal, 'little'), little_hex)
@@ -42,7 +45,11 @@ class Test(unittest.TestCase):
     def test4_function3(self):
         numbers = {-1: "-01", 0: "00", 1: "01"}
         for num in numbers:
-            self.assertEqual(conv_endian(num, endian='little'), numbers.get(num))
+            self.assertEqual(
+                conv_endian(
+                    num,
+                    endian='little'),
+                numbers.get(num))
 
     # Instructor examples
     def test5_function3(self):
@@ -62,11 +69,16 @@ class Test(unittest.TestCase):
 
     # Instructor example
     def test8_function3(self):
-        self.assertEqual(conv_endian(num=-954786, endian='little'), '-A2 91 0E')
+        self.assertEqual(
+            conv_endian(
+                num=-954786,
+                endian='little'),
+            '-A2 91 0E')
 
     # Invalid conversions
     def test9_function3(self):
-        numbers = {777: '0309', -777: '03 09', 1020: '03 FC ', -1020: ' -03 FC'}
+        numbers = {777: '0309', -777: '03 09',
+                   1020: '03 FC ', -1020: ' -03 FC'}
         for num in numbers:
             self.assertNotEqual(conv_endian(num, 'big'), numbers.get(num))
 
