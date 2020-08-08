@@ -1,6 +1,6 @@
 import unittest
 import random
-# import datetime  # will use eventually
+import datetime
 from task import conv_endian
 from task import my_datetime
 
@@ -21,17 +21,23 @@ class TestCase(unittest.TestCase):
                 big_hex = '-' + big_hex
             self.assertEqual(conv_endian(decimal, 'big'), big_hex)
 
-    # Function 2 - simple test 1
-    def test1_function2(self):
-        self.assertEqual(my_datetime(86486400), "09-27-1972")
-
-    # Function 2 - simple test 2
-    def test2_function2(self):
-        self.assertEqual(my_datetime(123456789), "11-29-1973")
-
-    # Function 2 - simple test 3
+    # Function 2 - checking origin
     def test3_function2(self):
         self.assertEqual(my_datetime(0), "01-01-1970")
+
+    # Function 2 - random tests
+    def test4_function2(self):
+        num_tests = 100
+        for i in range(0, num_tests):
+            num = random.randint(0, 9999*24*60*60)
+            # print("\n" + "Iteration: " + str(i) + ", Rand Num: " + str(num))
+            calculated_date = my_datetime(num)
+            actual_date = \
+                datetime.datetime.utcfromtimestamp(num).strftime("%m-%d-%Y")
+            # print(datetime.datetime.fromtimestamp(num))
+            # print(", Calculated Date: " + calculated_date
+            # + ", Actual Date: " + actual_date)
+            self.assertEqual(calculated_date, actual_date)
 
 
 if __name__ == '__main__':
