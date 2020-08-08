@@ -22,11 +22,11 @@ class TestCase(unittest.TestCase):
             self.assertEqual(conv_endian(decimal, 'big'), big_hex)
 
     # Function 2 - checking origin
-    def test3_function2(self):
+    def test1_function2(self):
         self.assertEqual(my_datetime(0), "01-01-1970")
 
     # Function 2 - random tests
-    def test4_function2(self):
+    def test2_function2(self):
         num_tests = 100
         for i in range(0, num_tests):
             num = random.randint(0, 9999*24*60*60)
