@@ -110,7 +110,7 @@ def conv_num(num_str):
     # Convert string to number
     if is_hexadecimal(num_str):
         return convert_hexadecimal(num_str)
-    else if is_float(num_str):
+    elif is_float(num_str):
         return conver_float(num_str)
     else:
         return convert_integer(num_str)
