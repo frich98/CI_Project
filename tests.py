@@ -1,6 +1,7 @@
 import unittest
 import random
 from task import conv_endian
+from task import conv_num
 
 
 class Test(unittest.TestCase):
