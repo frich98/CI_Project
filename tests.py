@@ -27,10 +27,14 @@ class TestCase(unittest.TestCase):
         self.assertEqual(my_datetime(0), "01-01-1970")
 
     # Function 2 - random tests
+    # NOTE THAT WINDOWS SYSTEMS HAVE YEAR DATE LIMIT, ~ 2038
+    # NEED TO RUN THESE TESTS ON LINUX SYSTEM TO HAVE THEM WORK
+    # PROPERLY.
     def test2_function2(self):
-        num_tests = 100
+        num_tests = 500  # function not very efficient, takes awhile
         for i in range(0, num_tests):
-            num = random.randint(0, 9999*24*60*60)
+            # year 9999, last second in year
+            num = random.randint(0, 253402300799)
             # print("\n" + "Iteration: " + str(i) + ", Rand Num: " + str(num))
             calculated_date = my_datetime(num)
             actual_date = \
@@ -39,6 +43,22 @@ class TestCase(unittest.TestCase):
             # print(", Calculated Date: " + calculated_date
             # + ", Actual Date: " + actual_date)
             self.assertEqual(calculated_date, actual_date)
+
+    # Function 2 - example test1
+    def test3_function2(self):
+        self.assertEqual(my_datetime(123456789), "11-29-1973")
+
+    # Function 2 - example test2
+    def test4_function2(self):
+        self.assertEqual(my_datetime(9876543210), "12-22-2282")
+
+    # Function 2 - extremity testing 1
+    def test5_function2(self):
+        self.assertEqual(my_datetime(253370764801), "01-01-9999")
+
+    # Function 2 - extremity testing 2
+    def test6_function2(self):
+        self.assertEqual(my_datetime(253402300799), "12-31-9999")
 
     # Testing Convert Number
     def test01_function1(self):
