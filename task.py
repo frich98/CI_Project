@@ -41,7 +41,7 @@ def conv_endian(num, endian='big'):
     else:
         hexadecimal = "-"
 
-    # Big Endian - flip contiguous hex symbols in blocks of two
+    # Big Endian - flip contiguous hex symbols in blocks of two and reverse
     if endian == 'big':
         for i in range(len(hexadecimal_list) - 1, 0, -2):
             temp = hexadecimal_list[i - 1]
@@ -49,7 +49,7 @@ def conv_endian(num, endian='big'):
             hexadecimal += temp
             hexadecimal += ' '
         return hexadecimal.strip()
-    # Little Endian - Flip contiguous hex symbols in blocks of two and reverse
+    # Little Endian - Flip contiguous hex symbols in blocks of two
     else:
         for i in range(0, len(hexadecimal_list), 2):
             temp = hexadecimal_list[i]
