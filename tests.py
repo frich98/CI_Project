@@ -35,7 +35,7 @@ class TestCase(unittest.TestCase):
         for i in range(0, num_tests):
             # year 9999, last second in year
             num = random.randint(0, 253402300799)
-            print("\n" + "Iteration: " + str(i) + ", Rand Num: " + str(num))
+            # print("\n" + "Iteration: " + str(i) + ", Rand Num: " + str(num))
             calculated_date = my_datetime(num)
             actual_date = \
                 datetime.datetime.utcfromtimestamp(num).strftime("%m-%d-%Y")
