@@ -122,7 +122,7 @@ def conv_endian(num, endian='big'):
 
     # Check if valid endian
     if endian != 'big' and endian != 'little':
-        return "None"
+        return None
 
     # Check for 0 value
     if num == 0:

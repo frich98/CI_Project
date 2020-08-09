@@ -87,13 +87,13 @@ class Test(unittest.TestCase):
 
     # Check return None
     def test10_function3(self):
-        self.assertEqual(conv_endian(num=-954786, endian='Little'), 'None')
+        self.assertEqual(conv_endian(num=-954786, endian='Little'), None)
 
     # Check return None
     def test11_function3(self):
         numbers = {-1: "-01", 0: "00", 1: "01"}
         for num in numbers:
-            self.assertEqual(conv_endian(num, 'Big'), 'None')
+            self.assertEqual(conv_endian(num, 'Big'), None)
 
     # Function 2 - checking origin
     def test1_function2(self):
