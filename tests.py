@@ -106,7 +106,7 @@ class Test(unittest.TestCase):
             # print("\n" + "Iteration: " + str(i) + ", Rand Num: " + str(num))
             calculated_date = my_datetime(num)
             actual_date = \
-                my_datetime.datetime.utcfromtimestamp(num).strftime("%m-%d-%Y")
+                datetime.datetime.utcfromtimestamp(num).strftime("%m-%d-%Y")
             # print(datetime.datetime.fromtimestamp(num))
             # print(", Calculated Date: " + calculated_date
             # + ", Actual Date: " + actual_date)
