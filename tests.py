@@ -125,6 +125,14 @@ class Test(unittest.TestCase):
     def test4_function2(self):
         self.assertEqual(my_datetime(9876543210), "12-22-2282")
 
+    # Function 2 - example test1
+    def test3_function2a(self):
+        self.assertEqual(my_datetime(975539265), "11-29-2000")
+
+    # Function 2 - example test2
+    def test4_function2a(self):
+        self.assertEqual(my_datetime(16755980865), "12-22-2500")
+
     # Function 2 - extremity testing 1
     def test5_function2(self):
         self.assertEqual(my_datetime(253370764801), "01-01-9999")

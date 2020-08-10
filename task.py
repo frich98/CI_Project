@@ -33,17 +33,20 @@ def convert_hexadecimal(num_str):
 
     valid_hex_chars = "0123456789ABCDEF"
     valid_hex_letters = "ABCDEF"
-
     hex_str = num_str.upper()
     hex_value = 0
     n = 0
     for i in range(len(hex_str) - 1, start_index - 1, -1):
         if not hex_str[i] in valid_hex_chars:
+            # Return none if invalid character in string
             return None
         else:
+            # Convert ascii hex value to number and add to hex
             if hex_str[i] in valid_hex_letters:
+                # A-F conversion
                 index_value = ord(hex_str[i]) - 55
             else:
+                # 0-9 conversion
                 index_value = ord(hex_str[i]) - 48
             hex_value += index_value * (16 ** n)
             n += 1
@@ -61,16 +64,22 @@ def convert_float(num_str):
     float_value = 0.0
     dec_index = num_str.find(".")
     n = 0
+    # Convert left side of decimal
     for i in range(dec_index - 1, start_index - 1, -1):
         if not num_str[i].isdigit():
+            # Return none if invalid character in string
             return None
+        # Convert ascii value and add to float
         float_value += ((ord(num_str[i]) - 48) * (10 ** n))
         n += 1
     n = -1
+    # Convert right side of decimal
     for j in range(dec_index + 1, len(num_str)):
         if not num_str[j].isdigit():
+            # Return none if invalid character in string
             return None
-        float_value += ((ord(num_str[j]) - 48) * (10 ** (n)))
+        # Convert ascii value and add to float
+        float_value += ((ord(num_str[j]) - 48) * (10 ** n))
         n -= 1
     if is_negative(num_str):
         float_value *= -1
@@ -87,8 +96,10 @@ def convert_integer(num_str):
     n = 0
     for i in range(len(num_str) - 1, start_index - 1, -1):
         if not num_str[i].isdigit():
+            # Return none if invalid character in string
             return None
         else:
+            # Convert ascii value and add to integer
             int_value += ((ord(num_str[i]) - 48) * (10 ** n))
             n += 1
     if is_negative(num_str):
@@ -194,8 +205,6 @@ def my_datetime(num_sec):
     else:
         num_days = int(num_sec / num_sec_per_day)
 
-    # ("\n Num Days: " + str(num_days))
-
     # List of # of days per year by year starting with 1970
     # need to handle up to year 9999 per Piazza post
     # cumulatively sum each consecutive year's # days in a new list
@@ -214,22 +223,12 @@ def my_datetime(num_sec):
     min_diff = min(i for i in diff if i >= 0)
     year_of_date = list_years[diff.index(min_diff)]
 
-    # print("\n CumSum Year: " + (str(cum_sum_list_days_by_year)))
-    # print("\n Diff Year: " + (str(diff)))
-
-    # print("\n Year? " + str(year_of_date))
-    # print("\n Leap Year? " + str(leap_year_tf(year_of_date)))
-    # num_days_of_year = list_days_since_epoch_by_year[diff.index(min_diff)]
-
     # finding number of days that have elapsed in prior years
     if diff.index(min_diff) > 0:
         num_days_of_prior_years = \
             cum_sum_list_days_by_year[(diff.index(min_diff) - 1)]
     else:
         num_days_of_prior_years = 0
-
-    # print("\n Number of days in prior years: " +
-    # str(num_days_of_prior_years))
 
     # num days elapsed in current year
     num_days_in_actual_year = num_days - num_days_of_prior_years
@@ -241,13 +240,10 @@ def my_datetime(num_sec):
         days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     cum_sum_days_in_month = cum_sum_list(days_in_month)
 
-    # print("\n Cum Sum Months: " + str(cum_sum_days_in_month))
-
     # finding closest month by finding min >= 0
     diff = [x - num_days_in_actual_year for x in cum_sum_days_in_month]
     min_diff = min(i for i in diff if i >= 0)
     month_of_date = diff.index(min_diff) + 1  # indexing starts at 0
-    # num_days_of_month = days_in_month[diff.index(min_diff)]
 
     # finding days that have elapsed since month in question
     if diff.index(min_diff) > 0:
@@ -255,8 +251,6 @@ def my_datetime(num_sec):
             cum_sum_days_in_month[(diff.index(min_diff) - 1)]
     else:
         num_days_prior_months = 0
-
-    # print("\n Number of days in prior months: " + str(num_days_prior_months))
 
     # num days elapsed in current month = day of date
     day_of_date = num_days_in_actual_year - num_days_prior_months
@@ -271,6 +265,7 @@ def my_datetime(num_sec):
 
 
 def format_date(mth, dy, yr):
+    """Returns the date in the format MM-DD-YYYY"""
     day_of_date = format_with_leading_zero(dy)
     month_of_date = format_with_leading_zero(mth)
     year_of_date = format_with_leading_zero(yr)
@@ -281,6 +276,8 @@ def format_date(mth, dy, yr):
 
 
 def format_with_leading_zero(num):
+    """Returns the number string passed with a 0 appended to front if
+    it is less than 10"""
     if num < 10:
         return "0" + str(int(num))
     else:
